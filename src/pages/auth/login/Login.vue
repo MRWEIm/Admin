@@ -50,11 +50,8 @@
 
   function onsubmit() {
     emailErrors.value = state == 'None' ? ['Email does not exist'] : []
-    console.log(emailErrors.value)
     passwordErrors.value = state == 'Ban' ? ['Incorrect password'] : []
-    console.log(passwordErrors.value)
-    if (state != 'Pass') return
-    else router.push({ name: 'dashboard' })
+    if (state == 'Pass') router.push({ name: 'dashboard' })
   }
 
   function request() {

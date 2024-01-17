@@ -2,6 +2,11 @@
   <va-card class="markup-tables mb-8">
     <va-card-title>{{ t('tables.basic') }}</va-card-title>
     <va-card-content class="overflow-auto">
+      <div class="flex flex-row gap-5">
+        <va-select v-model="search.property" class="mb-8" label="Property" :options="Workerspty" />
+        <va-input v-model="search.input" class="mb-8" :error-messages="inputError" :error="!!inputError.length" />
+        <va-button @click="onsearch"> {{ t('Search') }}</va-button>
+      </div>
       <va-tabs v-model="tabValue" class="w-fill" grow>
         <template #tabs>
           <va-tab v-for="title in tabTitles.slice(0, 3)" :key="title">
@@ -38,30 +43,57 @@
   const tabValue = ref(0)
   const activePage = ref(1)
   const numofpage = ref(1)
-  const itemnum = ref(20)
-  // 当表格更换时计算页码总数
+  const itemnum = ref(10)
+  const inputError = ref<string[]>([])
+  const search = ref({
+    property: 'WorkerID',
+    input: '',
+  })
+  const Workerspty = ref(['WorkerID', 'Name', 'Department'])
+  const WorkerDatapty = ref(['WorkerID', 'SensorID', 'TIMESTAMP', 'x', 'y', 'z', 'w'])
+  const SensorDatapty = ref(['WOrkerID', 'Timestamp', 'HR', 'BP'])
+  const property = ref()
+  
+  // 当表格更换时刷新参数
   watch(  
     () => tabValue.value,  
     (newValue, oldValue) => {  
-      axios.post('http://123.207.9.26:5000/admin_data', 
-                 { table: tabTitles[tabValue.value],
-                   item: itemnum.value })
-           .then(response => { numofpage.value = response.data.page;
-                               activePage.value = 1;
-                               console.log(numofpage.value); })
-           .catch(error => {  console.error(error); })
+      activePage.value = 1; 
+      search.value.input = '';
     },  
     { immediate: true }  
   );  
   // 获取数据
   watchEffect(() => {  
-    axios.post('http://123.207.9.26:5000/admin_data', 
-              { table: tabTitles[tabValue.value], 
-                page: activePage.value,
-                item: itemnum.value})
-              .then(response => { data.value = response.data;
-                                  console.log(response); })
-              .catch(error => {  console.error(error); })
+    
+    axios.get('http://123.207.9.26:5000/admin_data',{ 
+              params: { 
+                request: 'getdata',
+                table: tabTitles[tabValue.value],
+                item: itemnum.value,
+                page: activePage.value }})
+          .then(response => { data.value = response.data[1].dt;
+                              numofpage.value = response.data[0].page;
+                              console.log(response); })
+          .catch(error => {  console.error(error); })
   })
-
+  // 获取查询数据
+  function onsearch(){
+    inputError.value = search.value.input != '' ? [] : ['Input is needed']
+    console.log(inputError.value)
+    if(inputError.value == ''){
+      axios.get('http://123.207.9.26:5000/admin_data',{
+              params: {
+                request: 'search',
+                table: tabTitles[tabValue.value],
+                property: search.value.property,
+                input: search.value.input,
+                item: itemnum.value,
+                page: activePage.value }})
+          .then(response => { data.value = response.data[1].dt;
+                              numofpage.value = response.data[0].page;
+                              console.log(response)})
+          .catch(error => {console.error(error);})
+    }
+  }
 </script>
