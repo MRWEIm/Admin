@@ -2,11 +2,19 @@
   <va-card class="markup-tables mb-8">
     <va-card-title>{{ t('tables.basic') }}</va-card-title>
     <va-card-content class="overflow-auto">
-      <div class="flex flex-row gap-5">
-        <va-select v-model="search.property" class="mb-8" label="Property" :options="Workerspty" />
-        <va-input v-model="search.input" class="mb-8" :error-messages="inputError" :error="!!inputError.length" />
-        <va-button @click="onsearch"> {{ t('Search') }}</va-button>
-      </div>
+      <form>
+        <div class="grid grid-cols-12 gap-6">
+          <div class="flex col-span-3">
+            <va-select v-model="search.property" label="Property" :options="users[tabValue].property" />
+          </div>
+          <div class="flex col-span-7">
+            <va-input v-model="search.input" :error-messages="inputError" :error="!!inputError.length" placeholder="Input data for search" />
+          </div>
+          <div class="flex col-span-2">
+            <va-button style="margin-right: 0" @click="onsearch">Search</va-button>
+          </div>
+        </div>
+      </form>
       <va-tabs v-model="tabValue" class="w-fill" grow>
         <template #tabs>
           <va-tab v-for="title in tabTitles.slice(0, 3)" :key="title">
@@ -14,28 +22,29 @@
           </va-tab>
         </template>
       </va-tabs>
-      <div v-if="tabValue == 0">
-        <Workers :receiveddata="data" :page="activePage" :itemnum="itemnum"></Workers>
-      </div>
-      <div v-else-if="tabValue == 1">
-        <SensorData :receiveddata="data" :page="activePage" :itemnum="itemnum"></SensorData>
-      </div>
-      <div v-else-if="tabValue == 2">
-        <WorkerData :receiveddata="data" :page="activePage" :itemnum="itemnum"></WorkerData>
-      </div>
+      <table class="va-table va-table--striped va-table--hoverable w-full">
+        <thead>
+          <tr>
+            <th v-for="heads in users[tabValue].heads" :key="heads.head">{{ heads.head }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(dt, index) in data" :key="index">
+            <td>{{ (activePage - 1) * itemnum + index + 1  }}</td>
+            <td v-for="item in users[tabValue].bodys" :key="item.body">{{ dt[item.body] }}</td>
+          </tr>
+        </tbody>
+      </table>
       <va-pagination v-model="activePage" class="col-span-12 xl:col-span-6 row justify-center" :visible-pages="3" :pages=numofpage />
     </va-card-content>
   </va-card>
-
 </template>
 
 <script setup lang="ts">
   import axios from 'axios'
   import { reactive, ref, watchEffect, watch } from 'vue'
   import { useI18n } from 'vue-i18n'
-  import SensorData from './type/SensorData.vue'
-  import Workers from './type/Workers.vue'
-  import WorkerData from './type/WorkerData.vue'
+  import users from '../../../data/tab/users.json'
 
   const { t } = useI18n()
   const data = ref('')
@@ -49,11 +58,7 @@
     property: 'WorkerID',
     input: '',
   })
-  const Workerspty = ref(['WorkerID', 'Name', 'Department'])
-  const WorkerDatapty = ref(['WorkerID', 'SensorID', 'TIMESTAMP', 'x', 'y', 'z', 'w'])
-  const SensorDatapty = ref(['WOrkerID', 'Timestamp', 'HR', 'BP'])
-  const property = ref()
-  
+
   // 当表格更换时刷新参数
   watch(  
     () => tabValue.value,  
