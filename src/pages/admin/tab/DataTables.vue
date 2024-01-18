@@ -65,6 +65,7 @@
     (newValue, oldValue) => {  
       activePage.value = 1; 
       search.value.input = '';
+      search.value.property = users[tabValue.value].property[0]
     },  
     { immediate: true }  
   );  
