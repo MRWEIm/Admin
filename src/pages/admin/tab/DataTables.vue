@@ -56,7 +56,7 @@
   const tabValue = ref(0)
   const activePage = ref(1)
   const numofpage = ref(1)
-  const itemnum = ref(10)
+  const itemnum = ref(100)
   const inputError = ref<string[]>([])
   const pagestate = ref('all')
   const search = ref({
