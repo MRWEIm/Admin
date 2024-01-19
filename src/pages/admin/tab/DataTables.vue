@@ -8,10 +8,14 @@
             <va-select v-model="search.property" label="Property" :options="users[tabValue].property" />
           </div>
           <div class="flex col-span-7">
-            <va-input v-model="search.input" :error-messages="inputError" :error="!!inputError.length" placeholder="Input data for search" />
+            <va-input v-model="search.input" :error-messages="inputError" placeholder="Input data for search" >
+              <template #append>
+                <va-button @click="onsearch">Search</va-button>
+              </template>
+            </va-input>
           </div>
           <div class="flex col-span-2">
-            <va-button style="margin-right: 0" @click="onsearch">Search</va-button>
+            <va-button @click="ongetdata">Show all</va-button>
           </div>
         </div>
       </form>
@@ -54,6 +58,7 @@
   const numofpage = ref(1)
   const itemnum = ref(10)
   const inputError = ref<string[]>([])
+  const pagestate = ref('all')
   const search = ref({
     property: 'WorkerID',
     input: '',
@@ -65,30 +70,42 @@
     (newValue, oldValue) => {  
       activePage.value = 1; 
       search.value.input = '';
-      search.value.property = users[tabValue.value].property[0]
+      search.value.property = users[tabValue.value].property[0];
+      getdata();
     },  
     { immediate: true }  
   );  
   // 获取数据
-  watchEffect(() => {  
-    
-    axios.get('http://123.207.9.26:5000/admin_data',{ 
-              params: { 
-                request: 'getdata',
-                table: tabTitles[tabValue.value],
-                item: itemnum.value,
-                page: activePage.value }})
-          .then(response => { data.value = response.data[1].dt;
-                              numofpage.value = response.data[0].page;
-                              console.log(response); })
-          .catch(error => {  console.error(error); })
-  })
+  watch(  
+    () => activePage.value,  
+    (newValue, oldValue) => {  
+      if(pagestate.value == 'all')
+        getdata();
+      else if(pagestate.value == 'search')
+        searchdata();
+    },  
+    { immediate: true }  
+  );  
   // 获取查询数据
   function onsearch(){
+    activePage.value = 1;
     inputError.value = search.value.input != '' ? [] : ['Input is needed']
-    console.log(inputError.value)
-    if(inputError.value == ''){
-      axios.get('http://123.207.9.26:5000/admin_data',{
+    if(inputError.value.length === 0){
+      pagestate.value = 'search'
+      searchdata()
+    }
+  }
+  // 显示所有数据
+  function ongetdata(){
+    activePage.value = 1;
+    pagestate.value = 'all'
+    search.value.input = '';
+    search.value.property = users[tabValue.value].property[0];
+    getdata();
+  }  
+  // 查询数据
+  function searchdata(){
+    axios.get('http://123.207.9.26:5000/admin_data',{
               params: {
                 request: 'search',
                 table: tabTitles[tabValue.value],
@@ -100,6 +117,19 @@
                               numofpage.value = response.data[0].page;
                               console.log(response)})
           .catch(error => {console.error(error);})
-    }
   }
+  // 获取数据
+  function getdata(){
+    axios.get('http://123.207.9.26:5000/admin_data',{ 
+              params: { 
+                request: 'getdata',
+                table: tabTitles[tabValue.value],
+                item: itemnum.value,
+                page: activePage.value }})
+          .then(response => { data.value = response.data[1].dt;
+                              numofpage.value = response.data[0].page;
+                              console.log(response); })
+          .catch(error => {  console.error(error); })    
+  }
+
 </script>
