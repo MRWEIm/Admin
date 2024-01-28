@@ -1,0 +1,23 @@
+[
+  {
+    "heads": 
+      [
+        {"head": "Index"},
+        {"head": "WorkerID"},
+        {"head": "Name"},
+        {"head": "WristSensorState"},
+        {"head": "ShoulderSensorState"},
+        {"head": "WaistSensorState"},
+        {"head": "WatchState"}
+      ],
+    "bodys": 
+      [
+        {"body": "WorkerID"},
+        {"body": "Name"},
+        {"body": "WristSensorState"},
+        {"body": "ShoulderSensorState"},
+        {"body": "WaistSensorState"},
+        {"body": "WatchState"}
+      ]
+  }
+]

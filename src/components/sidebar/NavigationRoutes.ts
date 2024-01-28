@@ -19,11 +19,29 @@ export default {
       },
     },
     {
+      name: 'dash',
+      displayName: 'menu.dashboard',
+      meta: {
+        icon: 'vuestic-iconset-dashboard',
+      },
+    },
+    {
       name: 'tab',
       displayName: 'Tab',
       meta: {
         icon: 'vuestic-iconset-statistics'
-      }
+      },
+      disabled: true,
+      children: [
+        {
+          name: 'data',
+          displayName: 'dataTable',
+        },
+        {
+          name: 'state',
+          displayName: 'stateTable',
+        }
+      ]
     },
     {
       name: 'statistics',

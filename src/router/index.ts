@@ -23,6 +23,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../pages/admin/dashboard/Dashboard.vue'),
       },
       {
+        name: 'dash',
+        path: 'dash',
+        component: () => import('../pages/admin/dash/Dashboard.vue'),
+      },
+      {
         name: 'statistics',
         path: 'statistics',
         component: RouteViewComponent,
@@ -158,7 +163,19 @@ const routes: Array<RouteRecordRaw> = [
       {
         name: 'tab',
         path: 'tab',
-        component: () => import('../pages/admin/tab/DataTables.vue'),
+        component: RouteViewComponent,
+        children: [
+          {
+            name: 'data',
+            path: 'data',
+            component: () => import('../pages/admin/tab/DataTables.vue'),
+          },
+          {
+            name: 'state',
+            path: 'state',
+            component: () => import('../pages/admin/tab/StateTables.vue'),
+          }
+        ]
       },
       UIRoute,
     ],

@@ -317,7 +317,7 @@
     "lists": "Lists",
     "tables": "Tables",
     "markupTables": "Markup Tables",
-    "dataTables": "Data Tables",
+    "dataTables": "Data Table",
     "chips": "Chips",
     "tabs": "Tabs",
     "typography": "Typography",
@@ -337,7 +337,8 @@
     "line-maps": "Line Maps",
     "login-singup": "Login/Signup",
     "404-pages": "404 Pages",
-    "faq": "Faq"
+    "faq": "Faq",
+    "stateTable": "State Table"
   },
   "messages": {
     "all": "See all messages",

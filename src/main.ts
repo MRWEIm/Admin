@@ -8,6 +8,7 @@ import router from './router'
 import vuesticGlobalConfig from './services/vuestic-ui/global-config'
 import App from './App.vue'
 
+
 const app = createApp(App)
 
 app.use(stores)
@@ -26,5 +27,3 @@ if (import.meta.env.VITE_APP_GTM_ENABLED) {
 }
 
 app.mount('#app')
-
-

@@ -34,7 +34,7 @@
         </thead>
         <tbody>
           <tr v-for="(dt, index) in data" :key="index">
-            <td>{{ (activePage - 1) * itemnum + index + 1  }}</td>
+            <td>{{ (activePage - 1) * itemnum + index + 1 }}</td>
             <td v-for="item in users[tabValue].bodys" :key="item.body">{{ dt[item.body] }}</td>
           </tr>
         </tbody>
@@ -48,7 +48,7 @@
   import axios from 'axios'
   import { reactive, ref, watchEffect, watch } from 'vue'
   import { useI18n } from 'vue-i18n'
-  import users from '../../../data/tab/users.json'
+  import users from '../../../data/tab/data/table.json'
 
   const { t } = useI18n()
   const data = ref('')
