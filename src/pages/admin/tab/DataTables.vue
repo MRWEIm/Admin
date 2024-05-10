@@ -8,7 +8,7 @@
             <va-select v-model="search.property" label="Property" :options="users[tabValue].property" />
           </div>
           <div class="flex col-span-7">
-            <va-input v-model="search.input" :error-messages="inputError" placeholder="Input data for search" >
+            <va-input v-model="search.input" :error-messages="inputError" placeholder="Input data for search">
               <template #append>
                 <va-button @click="onsearch">Search</va-button>
               </template>
@@ -35,24 +35,29 @@
         <tbody>
           <tr v-for="(dt, index) in data" :key="index">
             <td>{{ (activePage - 1) * itemnum + index + 1 }}</td>
-            <td v-for="item in users[tabValue].bodys" :key="item.body">{{ dt[item.body] }}</td>
+            <td v-for="item in users[tabValue].bodys" :key="item.body">{{ (dt as any)[item.body] }}</td>
           </tr>
         </tbody>
       </table>
-      <va-pagination v-model="activePage" class="col-span-12 xl:col-span-6 row justify-center" :visible-pages="3" :pages=numofpage />
+      <va-pagination
+        v-model="activePage"
+        class="col-span-12 xl:col-span-6 row justify-center"
+        :visible-pages="3"
+        :pages="numofpage"
+      />
     </va-card-content>
   </va-card>
 </template>
 
 <script setup lang="ts">
   import axios from 'axios'
-  import { reactive, ref, watchEffect, watch } from 'vue'
+  import { reactive, ref, watch } from 'vue'
   import { useI18n } from 'vue-i18n'
   import users from '../../../data/tab/data/table.json'
 
   const { t } = useI18n()
   const data = ref('')
-  const tabTitles = reactive(['Workers', 'SensorData', 'WorkerData'])
+  const tabTitles = reactive(['WorkerInfo', 'SensorData', 'WatchData'])
   const tabValue = ref(0)
   const activePage = ref(1)
   const numofpage = ref(1)
@@ -65,71 +70,82 @@
   })
 
   // 当表格更换时刷新参数
-  watch(  
-    () => tabValue.value,  
-    (newValue, oldValue) => {  
-      activePage.value = 1; 
-      search.value.input = '';
-      search.value.property = users[tabValue.value].property[0];
-      getdata();
-    },  
-    { immediate: true }  
-  );  
+  watch(
+    () => tabValue.value,
+    (newValue, oldValue) => {
+      activePage.value = 1
+      search.value.input = ''
+      search.value.property = users[tabValue.value].property[0]
+      getdata()
+    },
+    { immediate: true },
+  )
   // 获取数据
-  watch(  
-    () => activePage.value,  
-    (newValue, oldValue) => {  
-      if(pagestate.value == 'all')
-        getdata();
-      else if(pagestate.value == 'search')
-        searchdata();
-    },  
-    { immediate: true }  
-  );  
+  watch(
+    () => activePage.value,
+    (newValue, oldValue) => {
+      if (pagestate.value == 'all') getdata()
+      else if (pagestate.value == 'search') searchdata()
+    },
+    { immediate: true },
+  )
   // 获取查询数据
-  function onsearch(){
-    activePage.value = 1;
+  function onsearch() {
+    activePage.value = 1
     inputError.value = search.value.input != '' ? [] : ['Input is needed']
-    if(inputError.value.length === 0){
+    if (inputError.value.length === 0) {
       pagestate.value = 'search'
       searchdata()
     }
   }
   // 显示所有数据
-  function ongetdata(){
-    activePage.value = 1;
+  function ongetdata() {
+    activePage.value = 1
     pagestate.value = 'all'
-    search.value.input = '';
-    search.value.property = users[tabValue.value].property[0];
-    getdata();
-  }  
+    search.value.input = ''
+    search.value.property = users[tabValue.value].property[0]
+    getdata()
+  }
   // 查询数据
-  function searchdata(){
-    axios.get('http://123.207.9.26:5000/admin_data',{
-              params: {
-                request: 'search',
-                table: tabTitles[tabValue.value],
-                property: search.value.property,
-                input: search.value.input,
-                item: itemnum.value,
-                page: activePage.value }})
-          .then(response => { data.value = response.data[1].dt;
-                              numofpage.value = response.data[0].page;
-                              console.log(response)})
-          .catch(error => {console.error(error);})
+  function searchdata() {
+    axios
+      .get('http://123.207.9.26:5000/admin_data', {
+        params: {
+          request: 'search',
+          table: tabTitles[tabValue.value],
+          property: search.value.property,
+          input: search.value.input,
+          item: itemnum.value,
+          page: activePage.value,
+        },
+      })
+      .then((response) => {
+        data.value = response.data[1].dt
+        numofpage.value = response.data[0].page
+        console.log(response)
+      })
+      .catch((error) => {
+        console.error(error)
+      })
   }
   // 获取数据
-  function getdata(){
-    axios.get('http://123.207.9.26:5000/admin_data',{ 
-              params: { 
-                request: 'getdata',
-                table: tabTitles[tabValue.value],
-                item: itemnum.value,
-                page: activePage.value }})
-          .then(response => { data.value = response.data[1].dt;
-                              numofpage.value = response.data[0].page;
-                              console.log(response); })
-          .catch(error => {  console.error(error); })    
+  function getdata() {
+    axios
+      .get('http://123.207.9.26:5000/admin_data', {
+        params: {
+          request: 'getdata',
+          table: tabTitles[tabValue.value],
+          item: itemnum.value,
+          page: activePage.value,
+        },
+      })
+      .then((response) => {
+        data.value = response.data[1].dt
+        numofpage.value = response.data[0].page
+        console.log(response)
+      })
+      .catch((error) => {
+        console.error(error)
+      })
   }
-
 </script>

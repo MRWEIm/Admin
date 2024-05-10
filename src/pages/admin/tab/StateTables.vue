@@ -19,17 +19,29 @@
           <tr v-for="(dt, index) in data" :key="index">
             <td>{{ (activePage - 1) * itemnum + index + 1 }}</td>
             <td v-for="item in tab[tabValue].bodys" :key="item.body">
-              <span v-if="item.body === 'WristSensorState' || item.body === 'WatchState' || item.body === 'ShoulderSensorState' || item.body === 'WaistSensorState'">
-                <va-badge :text="dt[item.body]" :color="getStatusColor(dt[item.body])"/>
+              <span
+                v-if="
+                  item.body === 'WristSensorState' ||
+                  item.body === 'WatchState' ||
+                  item.body === 'ShoulderSensorState' ||
+                  item.body === 'WaistSensorState'
+                "
+              >
+                <va-badge :text="(dt as any)[item.body]" :color="getStatusColor((dt as any)[item.body])" />
               </span>
               <span v-else>
-                {{ dt[item.body] }}
+                {{ (dt as any)[item.body] }}
               </span>
             </td>
           </tr>
         </tbody>
       </table>
-      <va-pagination v-model="activePage" class="col-span-12 xl:col-span-6 row justify-center" :visible-pages="3" :pages=numofpage />
+      <va-pagination
+        v-model="activePage"
+        class="col-span-12 xl:col-span-6 row justify-center"
+        :visible-pages="3"
+        :pages="numofpage"
+      />
     </va-card-content>
   </va-card>
 </template>
@@ -54,16 +66,21 @@
     }
     return 'danger'
   }
-  
-  onMounted(() =>{
+
+  onMounted(() => {
     const fetchDataInterval = setInterval(async () => {
-      axios.get('http://123.207.9.26:5000/state')
-           .then(response => {data.value = response.data})
-           .catch(error => {  console.error(error); })
-    }, 1000);
+      axios
+        .get('http://123.207.9.26:5000/state')
+        .then((response) => {
+          data.value = response.data
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+    }, 1000)
 
     onBeforeUnmount(() => {
-      clearInterval(fetchDataInterval);
-    });
-  });
+      clearInterval(fetchDataInterval)
+    })
+  })
 </script>

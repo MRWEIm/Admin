@@ -10,7 +10,7 @@ import UIRoute from '../pages/admin/ui/route'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/:catchAll(.*)',
-    redirect: { name: 'dashboard' },
+    redirect: { name: 'login' },
   },
   {
     name: 'admin',
@@ -19,13 +19,18 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         name: 'dashboard',
-        path: 'dashboard',
+        path: 'dash',
         component: () => import('../pages/admin/dashboard/Dashboard.vue'),
       },
       {
         name: 'dash',
-        path: 'dash',
+        path: 'dashboard',
         component: () => import('../pages/admin/dash/Dashboard.vue'),
+      },
+      {
+        name: 'worker',
+        path: 'worker',
+        component: () => import('../pages/admin/personal/Person.vue'),
       },
       {
         name: 'statistics',
@@ -174,8 +179,8 @@ const routes: Array<RouteRecordRaw> = [
             name: 'state',
             path: 'state',
             component: () => import('../pages/admin/tab/StateTables.vue'),
-          }
-        ]
+          },
+        ],
       },
       UIRoute,
     ],

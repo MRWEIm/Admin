@@ -11,13 +11,13 @@ export default {
     displayName: 'navigationRoutes.home',
   },
   routes: [
-    {
-      name: 'dashboard',
-      displayName: 'menu.dashboard',
-      meta: {
-        icon: 'vuestic-iconset-dashboard',
-      },
-    },
+    // {
+    //   name: 'dashboard',
+    //   displayName: 'menu.dashboard',
+    //   meta: {
+    //     icon: 'vuestic-iconset-dashboard',
+    //   },
+    // },
     {
       name: 'dash',
       displayName: 'menu.dashboard',
@@ -26,10 +26,17 @@ export default {
       },
     },
     {
+      name: 'worker',
+      displayName: 'Worker',
+      meta: {
+        icon: 'vuestic-iconset-statistics',
+      },
+    },
+    {
       name: 'tab',
       displayName: 'Tab',
       meta: {
-        icon: 'vuestic-iconset-statistics'
+        icon: 'vuestic-iconset-statistics',
       },
       disabled: true,
       children: [
@@ -40,8 +47,8 @@ export default {
         {
           name: 'state',
           displayName: 'stateTable',
-        }
-      ]
+        },
+      ],
     },
     {
       name: 'statistics',

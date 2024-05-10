@@ -14,8 +14,9 @@
     return Object.values(sets)
       .reverse()
       .map((module) => {
-        addFilteredListsTo(module.default)
-        return module.default
+        const moduleWithDefault = module as { default: any }
+        addFilteredListsTo(moduleWithDefault.default)
+        return moduleWithDefault.default
       })
   })
 

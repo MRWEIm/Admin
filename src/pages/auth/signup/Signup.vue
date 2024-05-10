@@ -65,27 +65,30 @@
   })
 
   function onsubmit() {
-
     emailErrors.value = email.value ? [] : ['Email is required']
     passwordErrors.value = password.value ? [] : ['Password is required']
     agreedToTermsErrors.value = agreedToTerms.value ? [] : ['You must agree to the terms of use to continue']
-    
+
     if (!formReady.value) return
     else signup()
   }
 
   function signup() {
-    axios.post('http://123.207.9.26:5000/signup', 
-              { email_value: email.value, password_value: password.value})
-              .then(response => { state = response.data.state;
-                                  console.log(state);
-                                  check()})
-              .catch(error => {  console.error(error); })
+    axios
+      .post('http://123.207.9.26:5000/signup', { email_value: email.value, password_value: password.value })
+      .then((response) => {
+        state = response.data.state
+        console.log(state)
+        check()
+      })
+      .catch((error) => {
+        console.error(error)
+      })
   }
 
-  function check(){
+  function check() {
     emailErrors.value = state == 'Exist' ? ['Email is existed'] : []
-    if(!formReady.value) return
-    else router.push({ name: 'dashboard' });
+    if (!formReady.value) return
+    else router.push({ name: 'dashboard' })
   }
 </script>

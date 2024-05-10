@@ -31,6 +31,9 @@
 
   import Navbar from '../components/navbar/Navbar.vue'
   import Sidebar from '../components/sidebar/Sidebar.vue'
+  import websocket from '../../src/utils/websocket'
+  import VueSocketIO from 'vue-socket.io'
+  import io from 'socket.io-client'
 
   const GlobalStore = useGlobalStore()
 
@@ -54,6 +57,16 @@
     sidebarMinimizedWidth.value = isMobile.value ? '0' : '4.5rem'
     sidebarWidth.value = isTablet.value ? '100%' : '16rem'
   }
+
+  // const socket = io('http://123.207.9.26:5000/socket.io')
+
+  // socket.on('connect', function () {
+  //   console.log('connected to server')
+  // })
+
+  // socket.on('disconnect', (reason) => {
+  //   console.log(reason)
+  // })
 
   onMounted(() => {
     window.addEventListener('resize', onResize)

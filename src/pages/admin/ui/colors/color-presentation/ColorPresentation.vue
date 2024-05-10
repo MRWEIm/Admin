@@ -1,6 +1,7 @@
 <template>
   <div class="color-presentation">
-    <va-popover color="info" :placement="popoverOptions.placement" :message="popoverOptions.content">
+    <!-- <va-popover color="info" :placement="popoverOptions.placement" :message="popoverOptions.content"> -->
+    <va-popover color="info" :message="popoverOptions.content">
       <div class="color-presentation__color" :style="computedStyle" @click="colorCopy()"></div>
     </va-popover>
 

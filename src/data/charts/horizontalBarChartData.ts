@@ -1,12 +1,7 @@
 import { TBarChartData } from '../types'
 
 export const horizontalBarChartData: TBarChartData = {
-  labels: [
-    'January',
-    'February',
-    'March',
-    'April',
-  ],
+  labels: ['January', 'February', 'March', 'April'],
   datasets: [
     {
       label: 'Vuestic',

@@ -1,4 +1,4 @@
-import { TLineChartData } from '../types'
+import { TLineChartData } from 'D:/VueProject/demo/src/data/types'
 import { reactive } from 'vue'
 
 export const locationData: TLineChartData = reactive({
@@ -24,7 +24,7 @@ export const departmentData: TLineChartData = reactive({
 })
 
 export const ageData: TLineChartData = reactive({
-  labels: ['20~35', '35~50', '>50'],
+  labels: ['20~40', '40~60', '>60'],
   datasets: [
     {
       label: 'Population',
