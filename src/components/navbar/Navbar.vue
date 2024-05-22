@@ -8,13 +8,13 @@
           :color="colors.primary"
           @click="isSidebarMinimized = !isSidebarMinimized"
         />
-        <router-link to="/">
+        <!-- <router-link to="/">
           <vuestic-logo class="logo" />
-        </router-link>
+        </router-link> -->
       </div>
     </template>
-    <div class="app-navbar-center">
-      <span class="hidden md:block mr-2">{{ t('navbar.messageUs') }}</span>
+    <div class="center">
+      <!-- <span class="hidden md:block mr-2">{{ t('navbar.messageUs') }}</span>
       <a class="hidden md:block mr-2" href="mailto:hello@epicmax.co" target="_blank" :style="{ color: colors.primary }">
         hello@epicmax.co
       </a>
@@ -26,7 +26,10 @@
         target="_blank"
       >
         {{ t('navbar.repository') }}
-      </va-button>
+      </va-button> -->
+      <div>
+        <img src="/public/horizontal.png" />
+      </div>
     </div>
     <template #right>
       <app-navbar-actions class="app-navbar__actions" :user-name="userName" />

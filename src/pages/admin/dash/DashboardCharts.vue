@@ -6,9 +6,6 @@
       </va-card-title>
       <va-card-content>
         <div class="grid grid-cols-12 gap-6">
-          <!-- <div class="col-span-3">
-            <va-chart :data="locationDataGenerated" type="pie" />
-          </div> -->
           <div class="col-span-4">
             <va-chart :data="departmentDataGenerated" type="pie" />
           </div>
@@ -52,28 +49,34 @@
   const fatigueConditionDataGenerated = useChartData(fatigueConditionData)
 
   onMounted(() => {
+    console.log('chart')
+    get_chart_data()
     const fetchDataInterval = setInterval(async () => {
-      axios
-        .get('http://123.207.9.26:5000/dashboard', { params: { type: 'Chart' } })
-        .then((response) => {
-          departmentData.datasets[0].data = response.data.depData.department
-          departmentData.datasets[0].backgroundColor = color.slice(0, response.data.depData.Num)
-          // locationData.datasets[0].data = response.data.locData.location
-          // locationData.datasets[0].backgroundColor = color.slice(0, response.data.locData.Num)
-          ageData.datasets[0].data = response.data.ageData.age
-          genderData.datasets[0].data = response.data.genderData.gender
-          //fatigueConditionData.labels = response.data.columnData.department
-          fatigueConditionData.datasets[0].data = response.data.columnData.Energetic
-          fatigueConditionData.datasets[1].data = response.data.columnData.STired
-          fatigueConditionData.datasets[2].data = response.data.columnData.Tired
-        })
-        .catch((error) => {
-          console.error(error)
-        })
+      get_chart_data()
     }, 2000)
 
     onBeforeUnmount(() => {
       clearInterval(fetchDataInterval)
     })
   })
+
+  function get_chart_data(){
+    axios
+      .get('http://123.207.9.26:5000/dashboard', { params: { type: 'Chart' } })
+      .then((response) => {
+        departmentData.datasets[0].data = response.data.depData.department
+        departmentData.datasets[0].backgroundColor = color.slice(0, response.data.depData.Num)
+        // locationData.datasets[0].data = response.data.locData.location
+        // locationData.datasets[0].backgroundColor = color.slice(0, response.data.locData.Num)
+        ageData.datasets[0].data = response.data.ageData.age
+        genderData.datasets[0].data = response.data.genderData.gender
+        //fatigueConditionData.labels = response.data.columnData.department
+        fatigueConditionData.datasets[0].data = response.data.columnData.Energetic
+        fatigueConditionData.datasets[1].data = response.data.columnData.STired
+        fatigueConditionData.datasets[2].data = response.data.columnData.Tired
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
 </script>

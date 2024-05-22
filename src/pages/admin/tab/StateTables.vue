@@ -67,20 +67,20 @@
     return 'danger'
   }
 
-  onMounted(() => {
-    const fetchDataInterval = setInterval(async () => {
-      axios
-        .get('http://123.207.9.26:5000/state')
-        .then((response) => {
-          data.value = response.data
-        })
-        .catch((error) => {
-          console.error(error)
-        })
-    }, 1000)
+  // onMounted(() => {
+  //   const fetchDataInterval = setInterval(async () => {
+  //     axios
+  //       .get('http://123.207.9.26:5000/state')
+  //       .then((response) => {
+  //         data.value = response.data
+  //       })
+  //       .catch((error) => {
+  //         console.error(error)
+  //       })
+  //   }, 1000)
 
-    onBeforeUnmount(() => {
-      clearInterval(fetchDataInterval)
-    })
-  })
+  //   onBeforeUnmount(() => {
+  //     clearInterval(fetchDataInterval)
+  //   })
+  // })
 </script>

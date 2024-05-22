@@ -18,7 +18,7 @@ export const departmentData: TLineChartData = reactive({
     {
       label: 'Population',
       backgroundColor: [],
-      data: [],
+      data: [451, 234, 912],
     },
   ],
 })
@@ -29,7 +29,7 @@ export const ageData: TLineChartData = reactive({
     {
       label: 'Population',
       backgroundColor: ['primary', 'warning', 'danger'],
-      data: [],
+      data: [70, 34, 19],
     },
   ],
 })
@@ -40,7 +40,7 @@ export const genderData: TLineChartData = reactive({
     {
       label: 'Population',
       backgroundColor: ['info', 'warning'],
-      data: [],
+      data: [147, 894],
     },
   ],
 })

@@ -61,24 +61,33 @@ k
 <script setup lang="ts">
   import { ref, onMounted, onBeforeUnmount } from 'vue'
   import axios from 'axios'
-  const data = ref([{ WorkerID: '', HR: 0, BP: 0, TFI: 0, FIWrist: 0, FIShoulder: 0, FIWaist: 0 }])
+  const data = ref([{ WorkerID: '123', HR: 87, BP: 99, TFI: 4.315, FIWrist: 5.178, FIShoulder: 5.694, FIWaist: 5.147 },
+                    { WorkerID: '456', HR: 96, BP: 94, TFI: 5.145, FIWrist: 4.843, FIShoulder: 8.456, FIWaist: 3.175 },
+                    { WorkerID: '789', HR: 63, BP: 98, TFI: 6.547, FIWrist: 6.148, FIShoulder: 6.545, FIWaist: 9.174 },
+  ])
 
   onMounted(() => {
+    console.log('tab')
+    get_table_data()
     const fetchDataInterval = setInterval(async () => {
-      axios
-        .get('http://123.207.9.26:5000/dashboard', { params: { type: 'Table' } })
-        .then((response) => {
-          data.value = response.data
-        })
-        .catch((error) => {
-          console.error(error)
-        })
+      get_table_data()
     }, 2000)
 
     onBeforeUnmount(() => {
       clearInterval(fetchDataInterval)
     })
   })
+
+  function get_table_data() {
+    axios
+      .get('http://123.207.9.26:5000/dashboard', { params: { type: 'Table' } })
+      .then((response) => {
+        data.value = response.data
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
 
   function getStatusColor(input: number) {
     if (input < 50) {

@@ -31,9 +31,6 @@
 
   import Navbar from '../components/navbar/Navbar.vue'
   import Sidebar from '../components/sidebar/Sidebar.vue'
-  import websocket from '../../src/utils/websocket'
-  import VueSocketIO from 'vue-socket.io'
-  import io from 'socket.io-client'
 
   const GlobalStore = useGlobalStore()
 

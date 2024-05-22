@@ -153,7 +153,7 @@
 
   function search() {
     axios
-      .get('http://123.207.9.26:5000/bs/personal', {
+      .get('http://123.207.9.26:5000/search_worker_data', {
         params: {
           Type: 'Search',
           WorkerID: id.value,
@@ -178,7 +178,7 @@
 
   function save() {
     axios
-      .get('http://123.207.9.26:5000/bs/personal', {
+      .get('http://123.207.9.26:5000/search_worker_data', {
         params: {
           Type: 'Save',
           WorkerID: id.value,
@@ -199,7 +199,7 @@
   onMounted(() => {
     const fetchDataInterval = setInterval(async () => {
       axios
-        .get('http://123.207.9.26:5000/bs/personal', {
+        .get('http://123.207.9.26:5000/search_worker_data', {
           params: {
             Type: 'Data',
             WorkerID: id.value,

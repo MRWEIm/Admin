@@ -1,9 +1,12 @@
 <template>
   <div class="auth-layout grid grid-cols-12 content-center">
     <div class="flex col-span-12 p-4 justify-center">
-      <router-link class="py-5 justify-center flex" to="/">
+      <!-- <router-link class="py-5 justify-center flex" to="/">
         <vuestic-logo height="32" />
-      </router-link>
+      </router-link> -->
+      <div>
+        <img src="/public/vertical.png">
+      </div>
     </div>
 
     <div class="flex justify-center col-span-12 p-4">

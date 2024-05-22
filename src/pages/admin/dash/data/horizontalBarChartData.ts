@@ -7,17 +7,17 @@ export const fatigueConditionData: TBarChartData = reactive({
     {
       label: '正常',
       backgroundColor: 'primary',
-      data: [],
+      data: [10, 20, 30],
     },
     {
       label: '轻度疲劳',
       backgroundColor: 'warning',
-      data: [],
+      data: [47, 89, 96],
     },
     {
       label: '危险',
       backgroundColor: 'danger',
-      data: [],
+      data: [32, 62, 95],
     },
   ],
 })

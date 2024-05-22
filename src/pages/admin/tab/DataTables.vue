@@ -109,7 +109,7 @@
   // 查询数据
   function searchdata() {
     axios
-      .get('http://123.207.9.26:5000/admin_data', {
+      .get('http://123.207.9.26:5000/search_history_data', {
         params: {
           request: 'search',
           table: tabTitles[tabValue.value],
@@ -131,7 +131,7 @@
   // 获取数据
   function getdata() {
     axios
-      .get('http://123.207.9.26:5000/admin_data', {
+      .get('http://123.207.9.26:5000/search_history_data', {
         params: {
           request: 'getdata',
           table: tabTitles[tabValue.value],
